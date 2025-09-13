@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>QUIZ APP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="card">
+            <h1>Quiz 🌍 </h1>
+            <div class="controls">
+                <div class="inputs">
+                    <div>
+                        <label for="subject">Select Subject</label>
+                        <select id="subject" disabled>
+                            <option value="" selected disabled>Select Subject</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="difficulty">Difficulty <span class="pill">Select Difficulty level.</span></label>
+                        <select id="difficulty">
+                            <option value="">Any</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="qcount">No. Of Questions</label>
+                    <input id="qcount" type="number" min="5" max="30" value="10" />
+                </div>
+            </div>
+            <div style="margin-top:14px; display:flex; gap:10px;">
+                <button id="startBtn">Start Quiz</button>
+                <button id="stopBtn" class="secondary hidden">Stop Quiz</button>
+            </div>
+            <div id="msg" class="status loading">Loading subject lists…</div>
+        </div>
+        <div id="quizCard" class="card hidden" style="margin-top:18px;">
+            <div class="progress-bar-container" id="progressBarContainer">
+                <div class="progress-bar" id="progressBar"></div>
+                <span class="progress-label" id="progressLabel"></span>
+            </div>
+            <div class="qmeta">
+                <div id="qprog">Question 1/10</div>
+                <div id="qscore">Score: 0</div>
+            </div>
+            <h2 id="question">—</h2>
+            <div id="answers" class="answers"></div>
+            <div class="footer">
+                <button id="nextBtn">Next</button>
+                <button id="stopMidBtn" class="secondary">Stop Now & Show Result</button>
+                <button id="hintBtn" class="secondary">Hint</button>
+                <button id="timerToggleBtn" class="secondary">Pause Timer</button>
+                <span id="timerDisplay" class="pill" style="margin-left:auto;"></span>
+            </div>
+            <div id="err" class="status error hidden"></div>
+        </div>
+        <div id="resultCard" class="card hidden" style="margin-top:18px;">
+            <h2 id="resultTitle">Result</h2>
+            <div id="resultText" class="result"></div>
+            <div id="reviewBox" style="margin:20px 0;"></div>
+            <div class="footer" style="margin-top:14px;">
+                <button id="againBtn">Back to Subjects</button>
+                <button id="retryBtn" class="secondary">Retry Same Settings</button>
+            </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; margin-bottom:15px;">
+            <button id="themeToggle" class="secondary"><i class='bx bxs-moon'></i></button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    
+</body>
+
+</html>
