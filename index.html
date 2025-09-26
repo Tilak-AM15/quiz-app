@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            width: 340px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #2575fc;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #2575fc;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #1a5edb;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .toggle-link {
+            margin-top: 15px;
+            display: block;
+            font-size: 14px;
+            color: #2575fc;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <form id="loginForm">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="loginUsername">Username</label>
+                <input type="text" id="loginUsername" placeholder="Enter username">
+            </div>
+            <div class="input-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password">
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <p id="loginMessage"></p>
+            <span class="toggle-link" onclick="showSignup()">Don’t have an account? Sign Up</span>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signupForm" style="display:none;">
+            <h2>Sign Up</h2>
+            <div class="input-group">
+                <label for="signupUsername">Username</label>
+                <input type="text" id="signupUsername" placeholder="Choose username">
+            </div>
+            <div class="input-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" placeholder="Choose password">
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+            <p id="signupMessage"></p>
+            <span class="toggle-link" onclick="showLogin()">Already have an account? Login</span>
+        </form>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const loginMessage = document.getElementById("loginMessage");
+        const signupMessage = document.getElementById("signupMessage");
+
+        // Switch forms
+        function showSignup() {
+            loginForm.style.display = "none";
+            signupForm.style.display = "block";
+        }
+        function showLogin() {
+            signupForm.style.display = "none";
+            loginForm.style.display = "block";
+        }
+
+        // Signup
+        signupForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("signupUsername").value.trim();
+            const password = document.getElementById("signupPassword").value.trim();
+
+            if (username === "" || password === "") {
+                signupMessage.textContent = "All fields are required!";
+                signupMessage.className = "error";
+                return;
+            }
+
+            if (localStorage.getItem(username)) {
+                signupMessage.textContent = "Username already exists!";
+                signupMessage.className = "error";
+            } else {
+                localStorage.setItem(username, password);
+                signupMessage.textContent = "Signup successful! You can now log in.";
+                signupMessage.className = "success";
+                setTimeout(showLogin, 1500);
+            }
+        });
+
+        // Login
+        loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("loginUsername").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+
+            if (username === "" || password === "") {
+                loginMessage.textContent = "All fields are required!";
+                loginMessage.className = "error";
+                return;
+            }
+
+            const storedPassword = localStorage.getItem(username);
+
+            if (storedPassword && storedPassword === password) {
+                loginMessage.textContent = "Login successful!";
+                loginMessage.className = "success";
+                setTimeout(() => {
+                    window.location.href = "dashboard.html"; // Redirect page
+                }, 1500);
+            } else {
+                loginMessage.textContent = "Invalid username or password!";
+                loginMessage.className = "error";
+            }
+        });
+    </script>
+</body>
+
+</html>
